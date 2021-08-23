@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.fc.dao.BoardMapper">
+    <insert id="insert">
+        insert into board (title,content,writer)
+        values (#{title},#{content},#{writer})
+        <selectKey order="AFTER" resultType="int" keyProperty="bno">
+            select last_insert_id() <!-- 마지막으로 insert한 후 order에 맞게 insert한 후 숫자로 select함 -->
+        </selectKey>
+    </insert>
+
+    <insert id="insertAttach">
+        insert into attach (bno, fname, savename, imgyn)
+        values (#{bno}, #{fname}, #{savename}, #{imgyn})
+    </insert>
+
+    <select id="select" resultType="org.zerock.fc.dto.BoardDTO"> <!-- resultType 패키지명이 중요함. 오타나면 바로 오류! -->
+        select * from board where bno = #{bno}
+    </select>
+
+    <select id="list" resultType="org.zerock.fc.dto.BoardDTO"> <!-- 불러온 row타입을 BoardDTO로 불러오라는 의미 -->
+        select * from board where bno > 0 order by bno desc limit #{skip}, #{size}
+        <!-- 페이징하는 쿼리문 limit 처음값, 출력될값 -->
+    </select>
+
+    <update id="update">
+        update board set title = #{title},content = #{content} , updatedate = now()
+        where bno = #{bno}
+    </update>
+
+    <delete id="delete">
+        delete from board where bno = #{bno}
+    </delete>
+
+    <select id="selectCount" resultType="int">
+        select count(bno) where bno > 0
+    </select>
+
+    <update id="updateViewcount">
+        update board set viewcount = viewcount + 1 where bno = #{bno}
+    </update>
+    
+    <select id="totalCount" resultType="int">
+        select count(*) from board;
+    </select>
+
+
+</mapper>

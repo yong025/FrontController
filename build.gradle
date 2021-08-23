@@ -1,0 +1,62 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'org.zerock'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.7.1'
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    compileOnly('javax.servlet:javax.servlet-api:4.0.1')
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+
+    // https://mvnrepository.com/artifact/org.reflections/reflections
+    implementation group: 'org.reflections', name: 'reflections', version: '0.9.12'//리플렉션 관련
+
+    // https://mvnrepository.com/artifact/jstl/jstl
+    implementation group: 'jstl', name: 'jstl', version: '1.2'//jstl 관련
+
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.0'//log4j2 관련
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.0'//log4j2 관련
+
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok lombok 관련
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    testCompileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20' // test환경에서도 lombok사용가능
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+    testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.25'//mysql 관련
+
+    // https://mvnrepository.com/artifact/org.mybatis/mybatis
+    implementation group: 'org.mybatis', name: 'mybatis', version: '3.5.7'//mybatis 관련
+
+    // https://mvnrepository.com/artifact/net.coobird/thumbnailator
+    implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.14'//Thumbnailator 관련
+
+}
+
+
+test {
+    useJUnitPlatform()
+}

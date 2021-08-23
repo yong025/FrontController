@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd"> <!-- config.dtd는 설정파일 -->
+<configuration>
+    <settings>
+        <setting name="logImpl" value="LOG4J2"/>
+    </settings>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED"> <!-- connection pooled 하는것 -->
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/bit08db"/>
+                <property name="username" value="bituser"/>
+                <property name="password" value="bituser"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers> <!-- mapper 설정이 무엇이 필요한지 -->
+        <mapper resource="org/zerock/fc/dao/TimeMapper.xml"></mapper> <!-- 여기서는 '.' 대신 '/' 사용해야함 -->
+        <mapper resource="org/zerock/fc/dao/BoardMapper.xml"></mapper>
+    </mappers>
+
+</configuration>
